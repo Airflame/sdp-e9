@@ -49,10 +49,55 @@ public class TriangleTest {
     }
 
     @Test
-    void triangleGetType_twoEdgesShorterThanThirdInput_throwException() {
+    void triangleGetType_firstAndSecondEdgeCombinedShorterThanThirdInput_throwException() {
         Triangle triangle = new Triangle(1, 1, 3);
         Exception exception = Assertions.assertThrows(IllegalArgumentException.class, triangle::getType);
-        String expectedMessage = "Two edges combined are shorter than the third one";
+        String expectedMessage = "Two edges combined are not longer than the third one";
+        String actualMessage = exception.getMessage();
+        Assertions.assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    void triangleGetType_secondAndThirdEdgeCombinedShorterThanFirstInput_throwException() {
+        Triangle triangle = new Triangle(5, 2, 2);
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, triangle::getType);
+        String expectedMessage = "Two edges combined are not longer than the third one";
+        String actualMessage = exception.getMessage();
+        Assertions.assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    void triangleGetType_firstAndThirdEdgeCombinedShorterThanSecondInput_throwException() {
+        Triangle triangle = new Triangle(1, 4, 1);
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, triangle::getType);
+        String expectedMessage = "Two edges combined are not longer than the third one";
+        String actualMessage = exception.getMessage();
+        Assertions.assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    void triangleGetType_firstAndSecondEdgeCombinedEqualsThirdInput_throwException() {
+        Triangle triangle = new Triangle(2, 2, 4);
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, triangle::getType);
+        String expectedMessage = "Two edges combined are not longer than the third one";
+        String actualMessage = exception.getMessage();
+        Assertions.assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    void triangleGetType_secondAndThirdEdgeCombinedEqualsFirstInput_throwException() {
+        Triangle triangle = new Triangle(10, 5, 5);
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, triangle::getType);
+        String expectedMessage = "Two edges combined are not longer than the third one";
+        String actualMessage = exception.getMessage();
+        Assertions.assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    void triangleGetType_thirdAndFirstEdgeCombinedEqualsSecondInput_throwException() {
+        Triangle triangle = new Triangle(6, 12, 6);
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class, triangle::getType);
+        String expectedMessage = "Two edges combined are not longer than the third one";
         String actualMessage = exception.getMessage();
         Assertions.assertTrue(actualMessage.contains(expectedMessage));
     }
@@ -82,8 +127,14 @@ public class TriangleTest {
     }
 
     @Test
-    void triangleGetType_allEdgesDifferentInput_returnScalene() {
+    void triangleGetType_allEdgesDifferentByOneInput_returnScalene() {
         Triangle triangle = new Triangle(2, 3, 4);
+        Assertions.assertEquals(triangle.getType(), TriangleType.SCALENE);
+    }
+
+    @Test
+    void triangleGetType_allEdgesDifferentByTwoInput_returnScalene() {
+        Triangle triangle = new Triangle(6, 8, 10);
         Assertions.assertEquals(triangle.getType(), TriangleType.SCALENE);
     }
 }
